@@ -3,7 +3,7 @@
 A production-grade, end-to-end custom system service implemented within the Android Open Source Project (AOSP). This project demonstrates low-level framework modification, custom Binder IPC architecture, system server registration, and strict SELinux policy enforcement on a Cuttlefish virtual device.
 
 
-https://github.com/user-attachments/assets/81701768-5fcf-47c2-92d0-adbb10d3c1d1
+https://github.com/user-attachments/assets/3e8a839e-68e7-4900-b22f-56d2949830a0
 
 
 ---

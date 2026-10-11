@@ -1,6 +1,6 @@
 package android.os;
 
 /** @hide */
-oneway interface IVehicleAmbientLightCallback {
+oneway interface IAmbientLightCallback {
     void onLuxChanged(int lux);
 }

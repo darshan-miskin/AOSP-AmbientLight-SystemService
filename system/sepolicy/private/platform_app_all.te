@@ -1,4 +1,4 @@
 # other platform permissions
 
 # ============ Add the following line =================
-allow platform_app vehicle_ambient_light_service:service_manager find;
+allow platform_app ambient_light_service:service_manager find;

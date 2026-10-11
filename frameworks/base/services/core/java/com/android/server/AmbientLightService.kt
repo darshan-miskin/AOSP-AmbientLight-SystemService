@@ -1,8 +1,8 @@
 package com.android.server
 
 import android.content.Context
-import android.os.IVehicleAmbientLightCallback
-import android.os.IVehicleAmbientLightService
+import android.os.IAmbientLightCallback
+import android.os.IAmbientLightService
 import android.os.RemoteCallbackList
 import android.os.RemoteException
 import android.util.Slog
@@ -16,13 +16,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class VehicleAmbientLightService(private val context: Context) : IVehicleAmbientLightService.Stub() {
+class AmbientLightService(private val context: Context) : IAmbientLightService.Stub() {
 
     companion object {
-        private const val TAG = "VehicleAmbientLightService"
+        private const val TAG = "AmbientLightService"
     }
 
-    private val callbackList = RemoteCallbackList<IVehicleAmbientLightCallback>()
+    private val callbackList = RemoteCallbackList<IAmbientLightCallback>()
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val _luxState = MutableStateFlow(0)
@@ -39,13 +39,13 @@ class VehicleAmbientLightService(private val context: Context) : IVehicleAmbient
         }
     }
 
-    override fun registerCallback(callback: IVehicleAmbientLightCallback?) {
+    override fun registerCallback(callback: IAmbientLightCallback?) {
         if (callback != null) {
             callbackList.register(callback)
         }
     }
 
-    override fun unregisterCallback(callback: IVehicleAmbientLightCallback?) {
+    override fun unregisterCallback(callback: IAmbientLightCallback?) {
         if (callback != null) {
             callbackList.unregister(callback)
         }
@@ -66,7 +66,7 @@ class VehicleAmbientLightService(private val context: Context) : IVehicleAmbient
     override fun dump(fd: FileDescriptor, args: Array<out String>?) {
         val pw = PrintWriter(FileOutputStream(fd))
         try {
-            pw.println("--- VehicleAmbientLightService Status ---")
+            pw.println("--- AmbientLightService Status ---")
             pw.println("Service Operational: true")
             pw.println("----------------------------------------")
         } finally {
@@ -98,7 +98,7 @@ class VehicleAmbientLightService(private val context: Context) : IVehicleAmbient
                     }
                 }
             } else {
-                writer.println("VehicleAmbientLightService commands: set, get")
+                writer.println("AmbientLightService commands: set, get")
             }
             writer.flush()
         }

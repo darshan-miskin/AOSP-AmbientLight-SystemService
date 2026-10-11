@@ -11,11 +11,11 @@ import java.util.Map;
  *
  * @hide
  */
-public class VehicleAmbientLightManager {
-    private static final String TAG = "VehicleAmbientLightMgr";
+public class AmbientLightManager {
+    private static final String TAG = "AmbientLightMgr";
 
-    private final IVehicleAmbientLightService mService;
-    private final Map<LuxChangeListener, IVehicleAmbientLightCallback> mCallbacks = new ArrayMap<>();
+    private final IAmbientLightService mService;
+    private final Map<LuxChangeListener, IAmbientLightCallback> mCallbacks = new ArrayMap<>();
 
     /**
      * Interface to receive real-time ambient light sensor changes.
@@ -25,7 +25,7 @@ public class VehicleAmbientLightManager {
     }
 
     /** @hide */
-    public VehicleAmbientLightManager(@NonNull IVehicleAmbientLightService service) {
+    public AmbientLightManager(@NonNull IAmbientLightService service) {
         mService = service;
     }
 
@@ -36,7 +36,7 @@ public class VehicleAmbientLightManager {
         try {
             return mService.getLux();
         } catch (RemoteException e) {
-            Log.e(TAG, "Failed to get lux from VehicleAmbientLightService", e);
+            Log.e(TAG, "Failed to get lux from AmbientLightService", e);
             return 0;
         }
     }
@@ -48,7 +48,7 @@ public class VehicleAmbientLightManager {
         try {
             mService.setLux(lux);
         } catch (RemoteException e) {
-            Log.e(TAG, "Failed to set lux on VehicleAmbientLightService", e);
+            Log.e(TAG, "Failed to set lux on AmbientLightService", e);
         }
     }
 
@@ -61,7 +61,7 @@ public class VehicleAmbientLightManager {
                 return true;
             }
 
-            IVehicleAmbientLightCallback aidlCallback = new IVehicleAmbientLightCallback.Stub() {
+            IAmbientLightCallback aidlCallback = new IAmbientLightCallback.Stub() {
                 @Override
                 public void onLuxChanged(int lux) {
                     listener.onLuxChanged(lux);
@@ -84,7 +84,7 @@ public class VehicleAmbientLightManager {
      */
     public boolean unregisterCallback(@NonNull LuxChangeListener listener) {
         synchronized (mCallbacks) {
-            IVehicleAmbientLightCallback aidlCallback = mCallbacks.remove(listener);
+            IAmbientLightCallback aidlCallback = mCallbacks.remove(listener);
             if (aidlCallback == null) {
                 return false;
             }

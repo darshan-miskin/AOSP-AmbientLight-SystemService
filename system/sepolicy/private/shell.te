@@ -1,4 +1,4 @@
 # other shell permissions
 
 # ============ Add the following line ================
-allow shell vehicle_ambient_light_service:service_manager find;
+allow shell ambient_light_service:service_manager find;

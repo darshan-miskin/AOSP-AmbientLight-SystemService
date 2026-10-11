@@ -1,7 +1,7 @@
 package android.app;
 
-import android.os.IVehicleAmbientLightService;
-import android.os.VehicleAmbientLightManager;
+import android.os.IAmbientLightService;
+import android.os.AmbientLightManager;
 
 public final class SystemServiceRegistry {
 
@@ -14,14 +14,14 @@ public final class SystemServiceRegistry {
         
         //============ Add the following code ==================
         registerService(
-            Context.VEHICLE_AMBIENT_LIGHT_SERVICE,
-            VehicleAmbientLightManager.class,
-            new CachedServiceFetcher<VehicleAmbientLightManager>() {
+            Context.AMBIENT_LIGHT_SERVICE,
+            AmbientLightManager.class,
+            new CachedServiceFetcher<AmbientLightManager>() {
                 @Override
-                public VehicleAmbientLightManager createService(ContextImpl ctx) {
-                    IBinder b = ServiceManager.getService(Context.VEHICLE_AMBIENT_LIGHT_SERVICE);
-                    IVehicleAmbientLightService service = IVehicleAmbientLightService.Stub.asInterface(b);
-                    return new VehicleAmbientLightManager(service);
+                public AmbientLightManager createService(ContextImpl ctx) {
+                    IBinder b = ServiceManager.getService(Context.AMBIENT_LIGHT_SERVICE);
+                    IAmbientLightService service = IAmbientLightService.Stub.asInterface(b);
+                    return new AmbientLightManager(service);
                 }
             }
         );

@@ -8,7 +8,7 @@ public abstract class Context {
      * Use with {@link #getSystemService} to retrieve a VehicleAmbientLightManager.
      * @hide
      */
-    public static final String VEHICLE_AMBIENT_LIGHT_SERVICE = "vehicle_ambient_light";
+    public static final String AMBIENT_LIGHT_SERVICE = "ambient_light";
 
     //================ Add the above code ====================
     

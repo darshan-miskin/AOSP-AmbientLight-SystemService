@@ -1,4 +1,4 @@
 # Other selinux policy mapping
 
 # ============= Add the following line ==================
-vehicle_ambient_light    u:object_r:vehicle_ambient_light_service:s0
+ambient_light    u:object_r:ambient_light_service:s0

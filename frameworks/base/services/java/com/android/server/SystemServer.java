@@ -1,6 +1,6 @@
 package com.android.server;
 
-import com.android.server.VehicleAmbientLightService;
+import com.android.server.AmbientLightService;
 
 public final class SystemServer implements Dumpable {
   /*
@@ -13,17 +13,15 @@ public final class SystemServer implements Dumpable {
       */
       
       //========== Add the following code ================
-      if(isAutomotive){
-          t.traceBegin("StartVehicleAmbientLightService");
-          try {
-              Slog.i(TAG, "Starting VehicleAmbientLightService (Kotlin)");
-              VehicleAmbientLightService ambientLightService = new VehicleAmbientLightService(context);
-              ServiceManager.addService(Context.VEHICLE_AMBIENT_LIGHT_SERVICE, ambientLightService);
-          } catch (Throwable e) {
-              Slog.e(TAG, "Failure starting VehicleAmbientLightService", e);
-          }
-          t.traceEnd();
+      t.traceBegin("StartAmbientLightService");
+      try {
+          Slog.i(TAG, "Starting AmbientLightService (Kotlin)");
+          AmbientLightService ambientLightService = new AmbientLightService(context);
+          ServiceManager.addService(Context.AMBIENT_LIGHT_SERVICE, ambientLightService);
+      } catch (Throwable e) {
+          Slog.e(TAG, "Failure starting AmbientLightService", e);
       }
+      t.traceEnd();
       //========== Add the above code ================
       
        /*

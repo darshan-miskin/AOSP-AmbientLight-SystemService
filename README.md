@@ -1,6 +1,6 @@
-# AAOS Custom System Service: Vehicle Ambient Light (`vehicle_ambient_light`)
+# AOSP Custom System Service: Ambient Light (`ambient_light`)
 
-A production-grade, end-to-end custom Android Automotive OS (AAOS) system service implemented within the Android Open Source Project (AOSP). This project demonstrates low-level framework modification, custom Binder IPC architecture, system server registration, and strict SELinux policy enforcement on a Cuttlefish virtual device.
+A production-grade, end-to-end custom system service implemented within the Android Open Source Project (AOSP). This project demonstrates low-level framework modification, custom Binder IPC architecture, system server registration, and strict SELinux policy enforcement on a Cuttlefish virtual device.
 
 
 https://github.com/user-attachments/assets/81701768-5fcf-47c2-92d0-adbb10d3c1d1
@@ -18,12 +18,12 @@ Unlike standard Android application-layer development, this project operates ent
                                     │
                                     ▼ (Binder IPC via Context.getSystemService)
 +------------------------------------------------------------------------------+
-|              [ VehicleAmbientLightManager (SDK Manager) ]                    |
+|              [ AmbientLightManager (SDK Manager) ]                           |
 +------------------------------------------------------------------------------+
                                     │
-                                    ▼ (IVehicleAmbientLightService.Stub / Proxy)
+                                    ▼ (IAmbientLightService.Stub / Proxy)
 +------------------------------------------------------------------------------+
-|               [ VehicleAmbientLightService (SystemServer) ]                  |
+|               [ AmbientLightService (SystemServer) ]                         |
 |                        (PID 1000, SELinux Enforced)                          |
 +------------------------------------------------------------------------------+
                                     │
@@ -39,20 +39,20 @@ Unlike standard Android application-layer development, this project operates ent
 The project integrates across the following core AOSP tree paths:
 
 ### 1. AIDL & Manager Layer (`frameworks/base`)
-* `core/java/android/os/IVehicleAmbientLightCallback.aidl` — Defines the asynchronous callback interface for light status updates.
-* `core/java/android/os/IVehicleAmbientLightService.aidl` — Defines the core Binder IPC interface methods.
-* `core/java/android/os/VehicleAmbientLightManager.java` — Public SDK manager wrapping IPC calls for client consumption.
+* `core/java/android/os/IAmbientLightCallback.aidl` — Defines the asynchronous callback interface for light status updates.
+* `core/java/android/os/IAmbientLightService.aidl` — Defines the core Binder IPC interface methods.
+* `core/java/android/os/AmbientLightManager.java` — Public SDK manager wrapping IPC calls for client consumption.
 * `core/java/android/os/SystemServiceRegistry.java` — Registers the manager with the system context registry.
 * `core/java/android/content/Context.java` — Exposes the service name constant.
 
 ### 2. Framework Services (`frameworks/base/services`)
-* `services/core/java/com/android/server/VehicleAmbientLightService.kt` — Core system service business logic implemented in Kotlin, running inside `SystemServer`.
+* `services/core/java/com/android/server/AmbientLightService.kt` — Core system service business logic implemented in Kotlin, running inside `SystemServer`.
 * `services/core/Android.bp` — Build configuration rules.
 * `services/java/com/android/server/SystemServer.java` — Instantiates and registers the service during boot (`startOtherServices`).
 * `services/proguard.flags` — Proguard rules to prevent stripping of service proxy/stub methods.
 
 ### 3. SELinux Security & Hardening (`system/sepolicy`)
-* `private/service.te` — Declares the custom service type (`vehicle_ambient_light_service`) and required attributes.
+* `private/service.te` — Declares the custom service type (`ambient_light_service`) and required attributes.
 * `private/service_contexts` — Maps the string identifier to the SELinux security context.
 * `private/system_server.te` — Grants `system_server` permission to add and manage the service.
 * `private/platform_app.te` & `shell.te` — Configures client domain access rules.
@@ -128,20 +128,20 @@ Verify that the `servicemanager` recognizes the custom handle:
 Bash
 
 ```
-adb -s 127.0.0.1:6520 shell service check vehicle_ambient_light
+adb -s 127.0.0.1:6520 shell service check ambient_light
 ```
 
-_Expected Output:_ `Service vehicle_ambient_light: found`
+_Expected Output:_ `Service ambient_light: found`
 
 ### 3. Inspect Service List & Descriptors
 
 Bash
 
 ```
-adb -s 127.0.0.1:6520 shell service list | grep vehicle_ambient_light
+adb -s 127.0.0.1:6520 shell service list | grep ambient_light
 ```
 
-_Expected Output:_ `330 vehicle_ambient_light: [android.os.IVehicleAmbientLightService]`
+_Expected Output:_ `330 ambient_light: [android.os.IAmbientLightService]`
 
 ### 4. Query Runtime Dumpsys Status
 
@@ -150,7 +150,7 @@ Inspect active status and service health:
 Bash
 
 ```
-adb -s 127.0.0.1:6520 shell dumpsys vehicle_ambient_light
+adb -s 127.0.0.1:6520 shell dumpsys ambient_light
 ```
 
 _Expected Output:_
@@ -158,17 +158,17 @@ _Expected Output:_
 Plaintext
 
 ```
---- VehicleAmbientLightService Status ---
+--- AmbientLightService Status ---
 Service Operational: true
 ------------------------------------
 ```
 
-### 5. Simulate Client App getLux() & setLux() calls to VehicleAmbientLightService
+### 5. Simulate Client App getLux() & setLux() calls to AmbientLightService
 
 Bash
 
 ```
-adb -s 127.0.0.1:6520 shell cmd vehicle_ambient_light set 500
+adb -s 127.0.0.1:6520 shell cmd ambient_light set 500
 ```
 
 _Expected Output:_ `Successfully set ambient lux to 500`
@@ -177,7 +177,7 @@ _Expected Output:_ `Successfully set ambient lux to 500`
 Bash
 
 ```
-adb -s 127.0.0.1:6520 shell cmd vehicle_ambient_light get
+adb -s 127.0.0.1:6520 shell cmd ambient_light get
 ```
 
 _Expected Output:_ `Current ambient lux: 500`

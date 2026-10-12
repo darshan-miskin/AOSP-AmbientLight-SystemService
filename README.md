@@ -193,4 +193,4 @@ Bash
 adb shell dmesg | grep avc
 ```
 
-Ensure your `.te` policy files correctly grant `add` and `find` permissions for `vehicle_ambient_light_service` under `system_server` and client domains.
+Ensure your `.te` policy files correctly grant `add` and `find` permissions for `ambient_light_service` under `system_server` and client domains.

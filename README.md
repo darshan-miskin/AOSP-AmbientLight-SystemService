@@ -2,6 +2,10 @@
 
 A custom system service implemented within the Android Open Source Project (AOSP). This project demonstrates low-level framework modification, custom Binder IPC architecture, system server registration, and strict SELinux policy enforcement on a Cuttlefish virtual device.
 
+[![AOSP Version](https://img.shields.io/badge/AOSP-Android%2017-blue.svg)](https://source.android.com/)
+[![SELinux](https://img.shields.io/badge/SELinux-Enforcing-red.svg)]()
+<!-- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) -->
+
 
 https://github.com/user-attachments/assets/3e8a839e-68e7-4900-b22f-56d2949830a0
 

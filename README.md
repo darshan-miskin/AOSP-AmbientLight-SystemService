@@ -1,6 +1,6 @@
 # AOSP Custom System Service: Ambient Light (`ambient_light`)
 
-A production-grade, end-to-end custom system service implemented within the Android Open Source Project (AOSP). This project demonstrates low-level framework modification, custom Binder IPC architecture, system server registration, and strict SELinux policy enforcement on a Cuttlefish virtual device.
+A custom system service implemented within the Android Open Source Project (AOSP). This project demonstrates low-level framework modification, custom Binder IPC architecture, system server registration, and strict SELinux policy enforcement on a Cuttlefish virtual device.
 
 
 https://github.com/user-attachments/assets/3e8a839e-68e7-4900-b22f-56d2949830a0
@@ -190,7 +190,7 @@ If you encounter boot loops or `SecurityException` during bring-up, inspect kern
 Bash
 
 ```
-adb shell dmesg | grep avc
+adb -s 127.0.0.1:6520 shell dmesg | grep avc
 ```
 
 Ensure your `.te` policy files correctly grant `add` and `find` permissions for `ambient_light_service` under `system_server` and client domains.

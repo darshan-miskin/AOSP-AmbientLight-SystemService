@@ -1,6 +1,6 @@
 # AOSP Custom System Service: Ambient Light (`ambient_light`)
 
-A custom system service implemented within the Android Open Source Project (AOSP). This project demonstrates low-level framework modification, custom Binder IPC architecture, system server registration, and strict SELinux policy enforcement on a Cuttlefish virtual device.
+A monolithic custom system service implemented within the Android Open Source Project (AOSP). This project demonstrates low-level framework modification, custom Binder IPC architecture, system server registration, and strict SELinux policy enforcement on a Cuttlefish virtual device.
 
 [![AOSP Version](https://img.shields.io/badge/AOSP-Android%2017-blue.svg)](https://source.android.com/)
 [![SELinux](https://img.shields.io/badge/SELinux-Enforcing-red.svg)]()
